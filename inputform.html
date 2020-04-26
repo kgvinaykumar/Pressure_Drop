@@ -9,7 +9,7 @@
     <form action="" method="post">
       <div1>
           <input type="number" placeholder="Flow ID" name="id">
-          <select class="unit" name="units">
+          <select class="unit" name="iunits">
             <option value="in">in</option>
             <option value="cm">cm</option>
           </select><br>
@@ -27,18 +27,20 @@
           </select><br>
           <br>
             <input type="number" placeholder="Pipe Length" name="fltg">
-            <select class="unit" name="units">
+            <select class="unit" name="lunits">
               <option value="in">in</option>
               <option value="cm">cm</option>
             </select><br>
             <br>
-          <select id="ltype" name="ltypes">
-            <option value="water">Water</option>
-            <option value="beer">Beer</option>
-            <option value="soda">Soda</option>
-          </select><br>
+            <label for="ltype">Choose Liquid:</label><br>
+            <select id="ltype" name="ltypes">
+              <option value="water">Water</option>
+              <option value="beer">Beer</option>
+              <option value="milk">Milk</option>
+            </select><br>
+            <br>
+            <button>Submit</button>
       </div1>
     </form>
   </body>
-
 </html>
