@@ -70,4 +70,4 @@ def result():
     else:
         smpl = ((eps/id)/3.7)+(5.74/(re**0.9))
         final = (0.25*rho*vel*vel)/(2*id*((math.log(smpl,10))**2))
-    return final
+    return render_template("result.html", final=result, punits=punits)

@@ -6,27 +6,27 @@
     <h1>
       Pressure Drop Across Pipe Calculator
     </h1>
-    <form action="" method="post">
+    <form action="{{url_for('result')}}" method="post">
       <div1>
-          <input type="number" placeholder="Flow ID" name="id">
+          <input type="number" step="any" placeholder="Flow ID" name="id">
           <select class="unit" name="iunits">
             <option value="in">in</option>
             <option value="cm">cm</option>
           </select><br>
         <br>
-          <input type="number" placeholder="Inlet Pressure" name="prs">
+          <input type="number" step="any" placeholder="Inlet Pressure" name="prs">
           <select id="punit" name="punits">
             <option value="psi">Psi</option>
             <option value="pa">Pa</option>
           </select><br>
         <br>
-          <input type="number" placeholder="Liquid Flow Rate" name="flrt">
+          <input type="number" step="any" placeholder="Liquid Flow Rate" name="flrt">
           <select id="funit" name="funits">
             <option value="gpm">gpm</option>
             <option value="lpm">lpm</option>
           </select><br>
           <br>
-            <input type="number" placeholder="Pipe Length" name="fltg">
+            <input type="number" step="any" placeholder="Pipe Length" name="fltg">
             <select class="unit" name="lunits">
               <option value="in">in</option>
               <option value="cm">cm</option>
