@@ -1,21 +1,21 @@
 #Import input from HTML and convert to SI units.
-from flask import Flask, render_template, request
 import math
-eps=0.0127
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
 @app.route("/")
 def inputform():
     return render_template("inputform.html")
-
+eps=0.0127
 #Import data.
-@app.route("/result", method=["POST"])
+@app.route("/result", methods=["POST"])
 def result():
-    id=request.form.get("id")
-    prs=request.form.get("prs")
-    flrt=request.form.get("flrt")
-    fltg=request.form.get("fltg")
+
+    id=float(request.form.get("id"))
+    prs=float(request.form.get("prs"))
+    flrt=float(request.form.get("flrt"))
+    fltg=float(request.form.get("fltg"))
     iunits=request.form.get("iunits")
     punits=request.form.get("punits")
     funits=request.form.get("funits")
@@ -38,13 +38,13 @@ def result():
         flrt=(flrt*0.000063)
     else:
         flrt=(flrt*0.0000167)
-        
+
     #Convert Pipe Length.
     if lunits == "in":
         fltg=(fltg/39.37)
     else:
         fltg=(fltg/100)
-        
+
     #Select Liquid.
     if ltypes=="water":
         rho= 1000
@@ -58,11 +58,11 @@ def result():
         rho= 1.030
         nu= 1.13e-6
         mu=0.003
-#Calculate fluid flow velocity. 
+#Calculate fluid flow velocity.
     vel = (4*flrt)/((22/7)*(id*id))
 #Calculate the Reynold's number.
     re = (vel*fltg)/nu
-#Calculate the flow drop between inlet and outlet of pipe. 
+#Calculate the flow drop between inlet and outlet of pipe.
     if re < 2300:
         final = (128*mu*flrt*fltg)/((22/7)*(id**4))
     elif 2300<re<3500:
@@ -70,4 +70,4 @@ def result():
     else:
         smpl = ((eps/id)/3.7)+(5.74/(re**0.9))
         final = (0.25*rho*vel*vel)/(2*id*((math.log(smpl,10))**2))
-    return render_template("result.html", final=result, punits=punits)
+    return render_template("result.html", result=final, punits=punits)
