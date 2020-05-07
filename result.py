@@ -1,5 +1,6 @@
 #Import input from HTML and convert to SI units.
 import math
+import convert
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
@@ -21,23 +22,9 @@ def result():
     funits=request.form.get("funits")
     lunits=request.form.get("lunits")
     ltypes=request.form.get("ltypes")
-#Convert ID.
-    if iunits == "in":
-        id=(id/39.37)
-    else:
-        id=(id/100)
 
-#Convert Flow Rate
-    if funits=="gpm":
-        flrt=(flrt*0.000063)
-    else:
-        flrt=(flrt*0.0000167)
+    id, flrt, fltg = convert.convert(id, flrt, fltg, iunits, funits, lunits)
 
-#Convert Pipe Length.
-    if lunits == "in":
-        fltg=(fltg/39.37)
-    else:
-        fltg=(fltg/100)
 #Select Liquid.
     if ltypes=="water":
         rho= 1000
