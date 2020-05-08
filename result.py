@@ -1,6 +1,6 @@
 #Import input from HTML and convert to SI units.
-import math
 import convert
+import sj
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
@@ -38,23 +38,7 @@ def result():
         rho= 1.030
         nu= 1.13e-6
         mu=0.003
-#Calculate fluid flow velocity.
-    vel = (4*flrt)/((22/7)*(id*id))
-#Calculate the Reynold's number.
-    re = (vel*rho*id)/mu
-#Calculate the flow drop between inlet and outlet of pipe.
-    if re < 2300:
-        message = "The flow is laminar."
-#Simplified Darcy-Weisbach equation for laminar flow.
-        final = (128*mu*flrt*fltg)/(math.pi*(id**4))
-    elif 2300<re<3500:
-        final = "The flow is not fully developed. Please try modifying parameters."
-    else:
-        message = "The flow is turbulent."
-#Swamee-Jain simplification for full-flowing circular cross-section.
-        smpl = ((eps/id)/3.7)+(5.74/(re**0.9))
-        f = 0.25/((math.log(smpl,10))**2)
-        final = (f*rho*(vel**2)*fltg)/(2*id)
+    final, message = sj.swameejain(flrt, fltg, id, rho, mu, eps)
 #Conversion back to display values.
     if iunits == "in":
         final = final/6894.76
