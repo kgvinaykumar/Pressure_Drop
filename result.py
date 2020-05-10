@@ -1,6 +1,6 @@
 #Import input from HTML and convert to SI units.
-import convert
-import sj
+import convert, sj
+from fluid_values import r, n, m
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
@@ -26,18 +26,11 @@ def result():
     id, flrt, fltg = convert.convert(id, flrt, fltg, iunits, funits, lunits)
 
 #Select Liquid.
-    if ltypes=="water":
-        rho= 1000
-        nu= 1.787e-6
-        mu= 1.793e-3
-    elif ltypes=="beer":
-        rho=1010
-        nu=1.8e-6
-        mu=1.799e-3
-    elif ltypes=="milk":
-        rho= 1.030
-        nu= 1.13e-6
-        mu=0.003
+    rho = r[ltypes]
+    nu = n[ltypes]
+    mu = m[ltypes]
+
+#Run Swamee Jain simplified model to calculate full-flowing circular cross-section.
     final, message = sj.swameejain(flrt, fltg, id, rho, mu, eps)
 #Conversion back to display values.
     if iunits == "in":
